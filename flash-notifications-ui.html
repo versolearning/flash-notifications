@@ -1,0 +1,24 @@
+<template name="flashNotifications">
+  <div class="notifications">
+    {{#momentum plugin='growl'}}
+      {{#each items}}
+        {{> _flashNotificationsItem}}
+      {{/each}}
+    {{/momentum}}
+  </div>
+</template>
+
+<template name="_flashNotificationsItem">
+  <div class="notification">
+    <span class="icon-{{icon}} {{feeling}}"></span>
+    <div class="meta">
+      <span class="title-notification">{{title}}</span>
+      {{#if actionLink}}
+        {{#with actionLink}}
+          <a class="{{classes}}" data-action href="{{href}}">{{text}}</a>
+        {{/with}}
+      {{/if}}
+      <span class="description">{{description}}</span>
+    </div>
+  </div>
+</template>
