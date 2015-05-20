@@ -1,3 +1,5 @@
+/* global FlashNotifications:true, FlashNotificationCollection:true */
+
 FlashNotificationCollection = function() {
   Meteor.Collection.call(this, null);
 };
@@ -6,20 +8,21 @@ FlashNotificationCollection.prototype = new Meteor.Collection(null);
 
 FlashNotificationCollection.prototype.add = function(data) {
   var self = this;
-  
+
   // defaults
-  data.pinned = !! data.pinned;
+  data.pinned = !!data.pinned;
   data.timeout = data.timeout || 3000;
 
-  // XXX: Figure out a pattern for validating enums like feeling
+  // Figure out a pattern for validating enums like feeling
   check(data, {
     title: String,
     description: String,
-    feeling: String, //One of: 'negative', 'positive', 'neutral'
+    // One of: "negative", "positive", "neutral'
+    feeling: String,
     icon: String,
     pinned: Boolean,
     timeout: Number,
-    // XXX: not sure if this is the right way to do it or use a template or
+    // not sure if this is the right way to do it or use a template or
     // html string??
     actionLink: Match.Optional({
       text: String,
@@ -31,7 +34,7 @@ FlashNotificationCollection.prototype.add = function(data) {
 
   var res = this.upsert(data, data);
 
-  if (! data.pinned) {
+  if (!data.pinned) {
     Meteor.setTimeout(function() {
       self.remove(res.insertedId);
     }, data.timeout);
@@ -40,5 +43,4 @@ FlashNotificationCollection.prototype.add = function(data) {
   return res;
 };
 
-FlashNotifications = new FlashNotificationCollection;
-
+FlashNotifications = new FlashNotificationCollection();
