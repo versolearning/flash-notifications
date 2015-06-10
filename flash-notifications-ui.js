@@ -20,10 +20,8 @@ Template._flashNotificationsItem.events({
 });
 
 Template.flashNotifications.tests = {
-  _collection: new FlashNotificationCollection(),
   basic: function() {
-    var self = this;
-
+    var collection = new FlashNotificationCollection();
     var data = [
       {
         title: "Blocked",
@@ -60,11 +58,11 @@ Template.flashNotifications.tests = {
     ];
 
     _.each(data, function(d) {
-      self._collection.add(d);
+      collection.add(d);
     });
 
     return {
-      FlashNotifications: self._collection
+      FlashNotifications: collection
     };
   }
 };
